@@ -11,14 +11,5 @@ exec odoo \
   --db_user="${PGUSER}" \
   --db_password="${PGPASSWORD}" \
   --database="${PGDATABASE}" \
-  --db_sslmode=require \
-  --limit-time-cpu=600 \
-  --limit-time-real=1200 \
-  --max-cron-threads=1 \
-  --workers=2 \
-  --log-level=info \
-  --xmlrpc-port=8069 \
-  --proxy-mode \
-  --no-database-list \
   "$@"
 
