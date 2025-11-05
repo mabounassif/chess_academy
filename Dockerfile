@@ -8,10 +8,7 @@ RUN apt-get update && apt-get install -y postgresql-client curl && rm -rf /var/l
 # Copy custom addons
 COPY ./addons /mnt/extra-addons
 
-# Copy configuration
-COPY ./config/odoo.railway.conf /etc/odoo/odoo.conf
-
-# Copy entrypoint script
+# Copy entrypoint script (configuration passed via command-line args)
 COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 

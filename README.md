@@ -5,6 +5,7 @@ A minimalistic Odoo setup for managing a Chess Academy with student enrollment, 
 ## 📋 Overview
 
 This setup includes:
+
 - **Docker-based Odoo 17** with PostgreSQL database
 - **Custom Chess Academy module** with models for Students, Coaches, and Lessons
 - **Pre-configured dependencies** for CRM, Sales, Calendar, Events, and Marketing
@@ -12,11 +13,11 @@ This setup includes:
 ## 🚀 Deployment Options
 
 ### 🚂 Railway (Cloud Deployment - Recommended)
+
 Deploy to Railway in minutes with automatic PostgreSQL setup and SSL certificates.
 
-**See detailed guide: [DEPLOY_RAILWAY.md](DEPLOY_RAILWAY.md)**
-
 Quick deploy:
+
 1. Push this repo to GitHub
 2. Create a Railway project from your repo
 3. Add PostgreSQL database
@@ -26,6 +27,7 @@ Quick deploy:
 ### 💻 Local Development (Docker)
 
 #### Prerequisites
+
 - Docker and Docker Compose installed on your system
 - Port 8069 available for Odoo web interface
 - Port 5432 available for PostgreSQL
@@ -33,22 +35,26 @@ Quick deploy:
 #### Installation
 
 1. **Start the services**
+
 ```bash
 docker-compose up -d
 ```
 
 2. **Wait for initialization** (first time takes ~2 minutes)
+
 ```bash
 docker logs -f chess_academy_odoo
 ```
 
 3. **Access Odoo**
+
 - Open browser: http://localhost:8069
 - Create your first database when prompted
 
 ### Database Creation
 
 When accessing Odoo for the first time:
+
 1. **Master Password**: `admin123`
 2. **Database Name**: `chess_academy` (or your choice)
 3. **Email**: Your admin email
@@ -66,6 +72,7 @@ After database creation:
 Go to **Apps** menu and install these modules in order:
 
 **Essential (Install First):**
+
 - Contacts
 - CRM
 - Sales
@@ -74,6 +81,7 @@ Go to **Apps** menu and install these modules in order:
 - Appointments
 
 **Additional (Install After Essential):**
+
 - Project
 - Website
 - Portal
@@ -90,6 +98,7 @@ Go to **Apps** menu and install these modules in order:
 4. Click **Install**
 
 If you don't see the Chess Academy module:
+
 1. Activate Developer Mode (Settings → Activate Developer Mode)
 2. Go to Apps → Update Apps List
 3. Search for "Chess Academy" and install
@@ -97,6 +106,7 @@ If you don't see the Chess Academy module:
 ## 🎓 Using the Chess Academy Module
 
 ### Students Management
+
 - Navigate to **Chess Academy → Students**
 - Create student records with:
   - Personal information (name, age, parent/guardian)
@@ -104,6 +114,7 @@ If you don't see the Chess Academy module:
   - Track enrollment date and lessons
 
 ### Coaches Management
+
 - Navigate to **Chess Academy → Coaches**
 - Add coach profiles with:
   - Contact information
@@ -111,6 +122,7 @@ If you don't see the Chess Academy module:
   - Specialization and hourly rate
 
 ### Lesson Scheduling
+
 - Navigate to **Chess Academy → Lessons**
 - Schedule lessons with:
   - Student and coach assignment
@@ -122,26 +134,29 @@ If you don't see the Chess Academy module:
 ## 🔧 Configuration
 
 ### Odoo Configuration
+
 Edit `config/odoo.conf` to customize:
+
 - Admin password
 - Database settings
 - Add-ons path
 - Performance settings
 
 ### Adding More Modules
+
 Place custom modules in the `addons/` directory and update the apps list in Odoo.
 
 ## 📊 Key Features by Module
 
-| Module Category | Features Enabled |
-|----------------|------------------|
-| **CRM & Contacts** | Lead management, parent/guardian contacts, partner schools |
-| **Sales & Billing** | Lesson packages, invoicing, payment tracking |
-| **Calendar** | Lesson scheduling, coach availability, room bookings |
-| **Project** | Student progress tracking, curriculum management |
-| **Website & Portal** | Parent/student login, lesson videos, online booking |
-| **Events** | Tournament organization, camps, special sessions |
-| **Marketing** | Email campaigns, SMS reminders, automated renewals |
+| Module Category      | Features Enabled                                           |
+| -------------------- | ---------------------------------------------------------- |
+| **CRM & Contacts**   | Lead management, parent/guardian contacts, partner schools |
+| **Sales & Billing**  | Lesson packages, invoicing, payment tracking               |
+| **Calendar**         | Lesson scheduling, coach availability, room bookings       |
+| **Project**          | Student progress tracking, curriculum management           |
+| **Website & Portal** | Parent/student login, lesson videos, online booking        |
+| **Events**           | Tournament organization, camps, special sessions           |
+| **Marketing**        | Email campaigns, SMS reminders, automated renewals         |
 
 ## 🛠️ Useful Commands
 
@@ -184,6 +199,7 @@ chess_academy/
 ## 🔐 Security Notes
 
 **Important:** Change these defaults in production:
+
 - Master password in `config/odoo.conf` (currently: `admin123`)
 - PostgreSQL password in `docker-compose.yml` (currently: `odoo`)
 - Restrict network access to your Odoo instance
@@ -191,19 +207,24 @@ chess_academy/
 ## 🆘 Troubleshooting
 
 ### Module not appearing?
+
 1. Enable Developer Mode
 2. Apps → Update Apps List
 3. Clear browser cache
 
 ### Port already in use?
+
 Edit `docker-compose.yml` to change port mappings:
+
 ```yaml
 ports:
-  - "8070:8069"  # Change 8070 to any available port
+  - "8070:8069" # Change 8070 to any available port
 ```
 
 ### Database connection issues?
+
 Check if PostgreSQL is running:
+
 ```bash
 docker ps | grep postgres
 docker logs chess_academy_db
@@ -231,9 +252,9 @@ This custom module is licensed under LGPL-3.
 ---
 
 **Note**: This is a minimal setup designed for quick deployment. For production use, consider:
+
 - Using environment variables for sensitive data
 - Setting up SSL/TLS certificates
 - Implementing backup automation
 - Configuring proper firewall rules
 - Using a reverse proxy (nginx)
-
