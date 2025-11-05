@@ -15,7 +15,6 @@ echo "PostgreSQL is up - starting Odoo"
 exec odoo \
   --addons-path=/mnt/extra-addons,/usr/lib/python3/dist-packages/odoo/addons \
   --data-dir=/var/lib/odoo \
-  --admin-passwd="${ODOO_ADMIN_PASSWORD:-admin123}" \
   --db_host="${PGHOST}" \
   --db_port="${PGPORT}" \
   --db_user="${PGUSER}" \
