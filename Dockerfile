@@ -27,6 +27,6 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
 # Use custom entrypoint
 ENTRYPOINT ["/entrypoint.sh"]
 
-# Start Odoo
-CMD ["odoo"]
+# No CMD needed - entrypoint handles everything
+CMD []
 
