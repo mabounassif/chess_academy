@@ -1,0 +1,66 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: chess_academy_db_dev
+    environment:
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: odoo
+      POSTGRES_DB: odoo
+    volumes:
+      - postgres_data_dev:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    networks:
+      - odoo-dev
+
+  odoo:
+    build:
+      context: ..
+      dockerfile: Dockerfile.dev
+    container_name: chess_academy_odoo_dev
+    depends_on:
+      postgres:
+        condition: service_started
+    ports:
+      - "8069:8069"
+      - "8072:8072" # Longpolling port
+      - "5678:5678" # Python debugger port
+    environment:
+      - HOST=postgres
+      - USER=odoo
+      - PASSWORD=odoo
+      - PGHOST=postgres
+      - PGUSER=odoo
+      - PGPASSWORD=odoo
+      - ODOO_DEV_MODE=1
+    volumes:
+      - odoo_data_dev:/var/lib/odoo
+      - ../config:/etc/odoo
+      - ../addons:/mnt/extra-addons
+    restart: unless-stopped
+    networks:
+      - odoo-dev
+    entrypoint: ["/bin/bash", "-c"]
+    command:
+      - |
+        set -e
+        echo "Waiting for PostgreSQL..."
+        until PGPASSWORD=$$PASSWORD psql -h postgres -U odoo -c '\q' 2>/dev/null; do
+          echo "PostgreSQL is unavailable - sleeping"
+          sleep 2
+        done
+        echo "PostgreSQL is ready - fixing permissions"
+        chown -R odoo:odoo /var/lib/odoo /mnt/extra-addons /etc/odoo 2>/dev/null || true
+        echo "Starting Odoo with dev mode"
+        exec odoo --dev=all --log-level=info
+
+volumes:
+  postgres_data_dev:
+  odoo_data_dev:
+
+networks:
+  odoo-dev:
+    driver: bridge

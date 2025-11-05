@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Student Tree View -->
+    <record id="view_chess_student_tree" model="ir.ui.view">
+        <field name="name">chess.student.tree</field>
+        <field name="model">chess.student</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="age"/>
+                <field name="skill_level"/>
+                <field name="rating"/>
+                <field name="parent_id"/>
+                <field name="enrollment_date"/>
+                <field name="lesson_count"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Student Form View -->
+    <record id="view_chess_student_form" model="ir.ui.view">
+        <field name="name">chess.student.form</field>
+        <field name="model">chess.student</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="date_of_birth"/>
+                            <field name="age"/>
+                            <field name="parent_id"/>
+                        </group>
+                        <group>
+                            <field name="email"/>
+                            <field name="phone"/>
+                            <field name="enrollment_date"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="skill_level"/>
+                            <field name="rating"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Lessons">
+                            <field name="lesson_ids">
+                                <tree>
+                                    <field name="date"/>
+                                    <field name="coach_id"/>
+                                    <field name="lesson_type"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Student Search View -->
+    <record id="view_chess_student_search" model="ir.ui.view">
+        <field name="name">chess.student.search</field>
+        <field name="model">chess.student</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="parent_id"/>
+                <filter string="Beginner" name="beginner" domain="[('skill_level','=','beginner')]"/>
+                <filter string="Intermediate" name="intermediate" domain="[('skill_level','=','intermediate')]"/>
+                <filter string="Advanced" name="advanced" domain="[('skill_level','=','advanced')]"/>
+                <filter string="Active" name="active" domain="[('active','=',True)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Skill Level" name="group_skill_level" context="{'group_by':'skill_level'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Student Action -->
+    <record id="action_chess_student" model="ir.actions.act_window">
+        <field name="name">Students</field>
+        <field name="res_model">chess.student</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first student
+            </p>
+        </field>
+    </record>
+</odoo>
+

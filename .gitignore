@@ -1,0 +1,34 @@
+# Odoo
+*.pyc
+*.pyo
+__pycache__/
+*.log
+
+# Database backups
+*.sql
+*.dump
+
+# Docker volumes (data persisted outside)
+# but ignore if created locally
+postgres_data/
+odoo_data/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+.env.production
+
+# Railway
+.railway/
+

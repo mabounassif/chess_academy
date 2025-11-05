@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Coach Tree View -->
+    <record id="view_chess_coach_tree" model="ir.ui.view">
+        <field name="name">chess.coach.tree</field>
+        <field name="model">chess.coach</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="title"/>
+                <field name="rating"/>
+                <field name="specialization"/>
+                <field name="hourly_rate"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Coach Form View -->
+    <record id="view_chess_coach_form" model="ir.ui.view">
+        <field name="name">chess.coach.form</field>
+        <field name="model">chess.coach</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="email"/>
+                            <field name="phone"/>
+                            <field name="active"/>
+                        </group>
+                        <group>
+                            <field name="title"/>
+                            <field name="rating"/>
+                            <field name="specialization"/>
+                            <field name="hourly_rate"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Lessons">
+                            <field name="lesson_ids">
+                                <tree>
+                                    <field name="date"/>
+                                    <field name="student_id"/>
+                                    <field name="lesson_type"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Biography">
+                            <field name="bio"/>
+                        </page>
+                        <page string="Internal Notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Coach Action -->
+    <record id="action_chess_coach" model="ir.actions.act_window">
+        <field name="name">Coaches</field>
+        <field name="res_model">chess.coach</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first coach
+            </p>
+        </field>
+    </record>
+</odoo>
+

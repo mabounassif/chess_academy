@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_chess_student,access_chess_student,chess_academy.model_chess_student,base.group_user,1,1,1,1
+access_chess_coach,access_chess_coach,chess_academy.model_chess_coach,base.group_user,1,1,1,1
+access_chess_lesson,access_chess_lesson,chess_academy.model_chess_lesson,base.group_user,1,1,1,1
+

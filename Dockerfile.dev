@@ -1,0 +1,50 @@
+FROM odoo:17.0
+
+USER root
+
+# Change odoo user to UID 1000 to match host user and set shell to bash
+RUN usermod -u 1000 -s /bin/bash odoo && \
+    groupmod -g 1000 odoo && \
+    find / -user 101 -exec chown -h 1000 {} \; 2>/dev/null || true && \
+    find / -group 101 -exec chgrp -h 1000 {} \; 2>/dev/null || true
+
+# Install development tools and build dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    vim \
+    curl \
+    wget \
+    postgresql-client \
+    python3-pip \
+    build-essential \
+    python3-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install/upgrade Python database and development dependencies
+RUN pip3 install --no-cache-dir --upgrade \
+    psycopg2-binary \
+    debugpy \
+    pylint-odoo \
+    autopep8 \
+    ipython \
+    watchdog
+
+# Copy custom addons
+COPY ./addons /mnt/extra-addons
+
+# Copy configuration
+COPY ./config/odoo.conf /etc/odoo/odoo.conf
+
+# Create Odoo data directory and set proper permissions
+RUN mkdir -p /var/lib/odoo && \
+    chown -R odoo:odoo /var/lib/odoo /mnt/extra-addons /etc/odoo
+
+USER odoo
+
+# Expose ports
+EXPOSE 8069 8072 5678
+
+# Default command (can be overridden)
+CMD ["odoo"]
+
+

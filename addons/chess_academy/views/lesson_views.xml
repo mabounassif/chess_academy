@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Lesson Tree View -->
+    <record id="view_chess_lesson_tree" model="ir.ui.view">
+        <field name="name">chess.lesson.tree</field>
+        <field name="model">chess.lesson</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="date"/>
+                <field name="student_id"/>
+                <field name="coach_id"/>
+                <field name="lesson_type"/>
+                <field name="duration"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Lesson Form View -->
+    <record id="view_chess_lesson_form" model="ir.ui.view">
+        <field name="name">chess.lesson.form</field>
+        <field name="model">chess.lesson</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="scheduled,completed"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="student_id"/>
+                            <field name="coach_id"/>
+                            <field name="date"/>
+                        </group>
+                        <group>
+                            <field name="lesson_type"/>
+                            <field name="duration"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Lesson Details">
+                            <group>
+                                <field name="topics_covered"/>
+                                <field name="homework"/>
+                                <field name="progress_notes"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Lesson Calendar View -->
+    <record id="view_chess_lesson_calendar" model="ir.ui.view">
+        <field name="name">chess.lesson.calendar</field>
+        <field name="model">chess.lesson</field>
+        <field name="arch" type="xml">
+            <calendar string="Lessons" date_start="date" color="coach_id" mode="week">
+                <field name="student_id"/>
+                <field name="coach_id"/>
+                <field name="state"/>
+            </calendar>
+        </field>
+    </record>
+
+    <!-- Lesson Search View -->
+    <record id="view_chess_lesson_search" model="ir.ui.view">
+        <field name="name">chess.lesson.search</field>
+        <field name="model">chess.lesson</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="student_id"/>
+                <field name="coach_id"/>
+                <filter string="Scheduled" name="scheduled" domain="[('state','=','scheduled')]"/>
+                <filter string="Completed" name="completed" domain="[('state','=','completed')]"/>
+                <filter string="Today" name="today" domain="[('date','&gt;=',datetime.datetime.now().replace(hour=0,minute=0,second=0)),('date','&lt;=',datetime.datetime.now().replace(hour=23,minute=59,second=59))]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Coach" name="group_coach" context="{'group_by':'coach_id'}"/>
+                    <filter string="Student" name="group_student" context="{'group_by':'student_id'}"/>
+                    <filter string="Status" name="group_state" context="{'group_by':'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Lesson Action -->
+    <record id="action_chess_lesson" model="ir.actions.act_window">
+        <field name="name">Lessons</field>
+        <field name="res_model">chess.lesson</field>
+        <field name="view_mode">tree,form,calendar</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Schedule your first lesson
+            </p>
+        </field>
+    </record>
+</odoo>
+

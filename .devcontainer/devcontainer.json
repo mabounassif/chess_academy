@@ -1,0 +1,73 @@
+{
+  "name": "Chess Academy Odoo Development",
+  "dockerComposeFile": "docker-compose.dev.yml",
+  "service": "odoo",
+  "workspaceFolder": "/mnt/extra-addons",
+
+  // Configure the container after creation
+  "postCreateCommand": "pip install --user pylint-odoo debugpy",
+
+  // Features to add to the dev container
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.11"
+    }
+  },
+
+  // VS Code settings
+  "customizations": {
+    "vscode": {
+      // Extensions to install in the container
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-python.debugpy",
+        "jigar-patel.odoosnippets",
+        "trinhanhngoc.vscode-odoo",
+        "wholroyd.jinja",
+        "redhat.vscode-xml",
+        "ms-azuretools.vscode-docker"
+      ],
+
+      // VS Code settings
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/bin/python3",
+        "python.linting.enabled": true,
+        "python.linting.pylintEnabled": true,
+        "python.formatting.provider": "autopep8",
+        "editor.formatOnSave": true,
+        "files.associations": {
+          "*.xml": "xml"
+        },
+        "xml.fileAssociations": [
+          {
+            "pattern": "**/*.xml",
+            "systemId": "odoo.xsd"
+          }
+        ]
+      }
+    }
+  },
+
+  // Forward ports
+  "forwardPorts": [8069, 5432],
+  "portsAttributes": {
+    "8069": {
+      "label": "Odoo Web Interface",
+      "onAutoForward": "notify"
+    },
+    "5432": {
+      "label": "PostgreSQL",
+      "onAutoForward": "silent"
+    }
+  },
+
+  // Run as odoo user
+  "remoteUser": "odoo",
+
+  // Mounts for development
+  "mounts": [
+    "source=${localWorkspaceFolder}/addons,target=/mnt/extra-addons,type=bind,consistency=cached"
+  ]
+}

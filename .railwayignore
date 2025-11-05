@@ -1,0 +1,11 @@
+README.md
+INSTALL.md
+DEPLOY_RAILWAY.md
+docker-compose.yml
+start.sh
+.git
+.gitignore
+*.md
+.vscode
+.idea
+

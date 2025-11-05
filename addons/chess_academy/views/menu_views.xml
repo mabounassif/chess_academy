@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Main Menu -->
+    <menuitem id="menu_chess_academy_root"
+              name="Chess Academy"
+              sequence="10"/>
+
+    <!-- Students Menu -->
+    <menuitem id="menu_chess_academy_students"
+              name="Students"
+              parent="menu_chess_academy_root"
+              action="action_chess_student"
+              sequence="10"/>
+
+    <!-- Coaches Menu -->
+    <menuitem id="menu_chess_academy_coaches"
+              name="Coaches"
+              parent="menu_chess_academy_root"
+              action="action_chess_coach"
+              sequence="20"/>
+
+    <!-- Lessons Menu -->
+    <menuitem id="menu_chess_academy_lessons"
+              name="Lessons"
+              parent="menu_chess_academy_root"
+              action="action_chess_lesson"
+              sequence="30"/>
+</odoo>
+
